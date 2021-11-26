@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class TransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        return Transaction::all();
     }
 
     /**
@@ -36,11 +36,12 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $name = $request->name;
-        $type = $request->type;
-        $desc = $request->desc;
-        $quantity = $request->quantity;
-        $price = $request->price;
-        return Product::create($request->all());
+        $phone_num = $request->phone_num;
+        $address = $request->address;
+        $zipcode = $request->zipcode;
+        $city = $request->city;
+        $state = $request->state;
+        return Transaction::create($request->all());
     }
 
     /**
@@ -51,7 +52,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return Product::findOrFail($id);
+        return Transaction::findOrFail($id);
     }
 
     /**
@@ -75,14 +76,14 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required',
-            'type' => 'required',
-            'desc' => 'required',
-            'quantity' => 'required',
-            'price' => 'required'
+            'admin_id' => 'required',
+            'customer_id' => 'required',
+            'order_id' => 'required',
+            'product_id' => 'required',
+            'payment_id' => 'required'
         ]);
     
-        $order = Product::find($id);
+        $order = Transaction::find($id);
         $order->update($request->all());
         return $order;
     }
@@ -95,6 +96,6 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        Product::destroy($id);
+        Transaction::destroy($id);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -13,7 +14,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        return Admin::all();
     }
 
     /**
@@ -34,7 +35,11 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $name = $request->name;
+        $email = $request->email;
+        $password = $request->password;
+
+        return Admin::create($request->all());
     }
 
     /**
@@ -45,7 +50,7 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        //
+        return Admin::findOrFail($id);
     }
 
     /**
@@ -68,7 +73,15 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+    
+        $admin = Admin::find($id);
+        $admin->update($request->all());
+        return $admin;
     }
 
     /**
@@ -79,6 +92,6 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Admin::destroy($id);
     }
 }
