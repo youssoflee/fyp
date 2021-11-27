@@ -63,6 +63,6 @@ Route::get('/showOrder/{id}', [OrderController::class, 'show']);
 Route::put('/updateOrder/{id}', [OrderController::class, 'update']);
 Route::delete('/destroyOrder/{id}', [OrderController::class, 'destroy']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

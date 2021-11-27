@@ -16,5 +16,5 @@ class Customer extends Model
      */
     protected $table = 'customers';
 
-    protected $fillable = ['name','phone_num','address','zipcode','city','state' ];
+    protected $fillable = ['name','email','password','phone_num','address','zipcode','city','state' ];
 }

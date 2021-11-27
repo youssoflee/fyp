@@ -1,43 +1,22 @@
-import React, { Component } from 'react'
-import { HashRouter, Route, Switch } from 'react-router-dom'
-import './scss/style.scss'
+import React, {Component} from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-const loading = (
-  <div className="pt-3 text-center">
-    <div className="sk-spinner sk-spinner-pulse"></div>
-  </div>
-)
+import Customer from './pages/Customer';
+import Addcustomer from './pages/Addcustomer';
+import Editcustomer from './pages/Editcustomer';
+import Delcustomer from './pages/Delcustomer';
 
-// Containers
-const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
-
-// Pages
-const Login = React.lazy(() => import('./views/pages/login/Login'))
-const Register = React.lazy(() => import('./views/pages/register/Register'))
-const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
-const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
-
-class App extends Component {
-  render() {
-    return (
-      <HashRouter>
-        <React.Suspense fallback={loading}>
-          <Switch>
-            <Route exact path="/login" name="Login Page" render={(props) => <Login {...props} />} />
-            <Route
-              exact
-              path="/register"
-              name="Register Page"
-              render={(props) => <Register {...props} />}
-            />
-            <Route exact path="/404" name="Page 404" render={(props) => <Page404 {...props} />} />
-            <Route exact path="/500" name="Page 500" render={(props) => <Page500 {...props} />} />
-            <Route path="/" name="Home" render={(props) => <DefaultLayout {...props} />} />
-          </Switch>
-        </React.Suspense>
-      </HashRouter>
-    )
-  }
+function App () {
+  return (
+    <Router>
+      <Switch>
+          <Route exact path="/" component={Customer} />
+          <Route path="/add-customer" component={Addcustomer} />
+          <Route path="/edit-customer/:id" component={Editcustomer}/>
+          <Route path="/del-customer/:id" component={Delcustomer}/>
+      </Switch>
+    </Router>
+  );
 }
 
-export default App
+export default App;

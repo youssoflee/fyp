@@ -14,7 +14,11 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return Customer::all();
+        $customer = Customer::all();
+        return response()->json([
+            'status'=> 200,
+            'customers'=> $customer,
+        ]);
     }
 
     /**
@@ -25,12 +29,16 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     { 
-        $name = $request->name;
-        $phone_num = $request->phone_num;
-        $address = $request->address;
-        $zipcode = $request->zipcode;
-        $city = $request->city;
-        $state = $request->state;
+        $customer = new Customer;
+        $customer->name = $request->input('name');
+        $customer->email = $request->input('email');
+        $customer->password = $request->input('password');
+        $customer->phone_num = $request->input('phone_num');
+        $customer->address = $request->input('address');
+        $customer->zipcode = $request->input('zipcode');
+        $customer->city = $request->input('city');
+        $customer->state = $request->input('state');
+        $customer->save();
         // echo $name;
         // echo $phone_num;
         // echo $address;
@@ -38,7 +46,10 @@ class CustomerController extends Controller
         // echo $city;
         // echo $state;
         // echo $request;
-        return Customer::create($request->all());
+        return response()->json([
+            'status'=> 200,
+            'message'=> 'Customer Added Successfully',
+        ]);
     }
 
     /**
@@ -63,6 +74,8 @@ class CustomerController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
             'phone_num' => 'required',
             'address' => 'required',
             'zipcode' => 'required',
@@ -71,8 +84,12 @@ class CustomerController extends Controller
         ]);
     
         $customer = Customer::find($id);
-        $customer->update($request->all());
-        return $customer;
+        return response()->json([
+            'status'=> 200,
+            'customer'=> $customer,
+        ]);
+        // $customer->update($request->all());
+        // return $customer;
 
     }
 
