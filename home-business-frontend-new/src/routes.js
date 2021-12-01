@@ -38,9 +38,25 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'));
 const Users = React.lazy(() => import('./views/users/Users'));
 const User = React.lazy(() => import('./views/users/User'));
 
+
+const Customer = React.lazy(() => import('./views/homeBusinessPages/Customers/Customer'))
+// const AddCustomer = React.lazy(() => import('./views/homeBusinessPages/Customers/Addcustomer'))
+// const EditCustomer = React.lazy(() => import('./views/homeBusinessPages/Customers/Editcustomer'))
+
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  
+   // start
+
+   { path: '/customer', name: 'Customer', component: Customer },
+  //  { path: '/addcustomer', name: 'Add Customer', component: AddCustomer },
+  //  { path: '/editcustomer/3', name: 'Edit Customer', component: EditCustomer },
+   
+ 
+   // end
+
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },
   { path: '/theme/typography', name: 'Typography', component: Typography },

@@ -13,6 +13,14 @@ const _nav =  [
     }
   },
   {
+    _tag: 'CSidebarNavItem',
+    // component: CNavItem,
+    name: 'Customers',
+    to: '/customer',
+    // icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+  },
+
+  {
     _tag: 'CSidebarNavTitle',
     _children: ['Theme']
   },
