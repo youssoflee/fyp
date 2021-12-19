@@ -2,31 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Customer;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return Order::all();
+        $data = User::with('UserRole')->get();
+        return response($data, 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function registerCustomer(Request $request)
     {
-        //
-    }
 
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|unique:users,email',
+            'password' => 'required|confirmed|string',
+        ]);
+
+        //store user data
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role_id' => 2,
+            'created_at' => Carbon::now(),
+        ]);
+
+        Customer::create(['user_id' => $user->id]);
+
+        $token = $user->createToken('register')->plainTextToken;
+
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
+
+        return response($response, 201);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -35,13 +53,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $name = $request->name;
-        $phone_num = $request->phone_num;
-        $address = $request->address;
-        $zipcode = $request->zipcode;
-        $city = $request->city;
-        $state = $request->state;
-        return Order::create($request->all());
+        //
     }
 
     /**
@@ -52,7 +64,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        return Order::findOrFail($id);
+        //
     }
 
     /**
@@ -75,17 +87,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'payment_id' => 'required',
-            'customer_id' => 'required',
-            'date' => 'required',
-            'quantity' => 'required',
-            'price' => 'required'
-        ]);
-    
-        $order = Order::find($id);
-        $order->update($request->all());
-        return $order;
+        //
     }
 
     /**
@@ -96,6 +98,6 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        Order::destroy($id);
+        //
     }
 }

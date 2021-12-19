@@ -22,10 +22,10 @@ class CreateUserRolesTable extends Migration
 
         Schema::table('user_roles', function (Blueprint $table) {
             $data = [
-                ["role" => "Admin"],
+                ["role" => "Owner"],
                 ["role" => "Customer"],
             ];
-            
+
             UserRole::insert($data);
         });
     }

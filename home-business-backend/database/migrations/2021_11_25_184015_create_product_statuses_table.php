@@ -1,10 +1,11 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\ProductStatus;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateProductStatusTable extends Migration
+class CreateProductStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -28,7 +29,7 @@ class CreateProductStatusTable extends Migration
                 ['status' => 'Unavailable', 'color_id' => 4],
                 ['status' => 'Low In Stock', 'color_id' => 5]
             ];
-            AssetStatus::insert($data);
+            ProductStatus::insert($data);
         });
     }
 
@@ -39,6 +40,6 @@ class CreateProductStatusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('_product_status');
+        Schema::dropIfExists('product_statuses');
     }
 }

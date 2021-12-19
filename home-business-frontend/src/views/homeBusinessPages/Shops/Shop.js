@@ -233,7 +233,7 @@ import {
           type: product.type,
           description: product.desc,
         //   quantity: product.quantity,
-          status: product.status,
+          status: product.product_status.status,
           price: product.price,
           //       email: customer.email,
           //       password: customer.password,

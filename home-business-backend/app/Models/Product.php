@@ -15,5 +15,10 @@ class Product extends Model
      */
     protected $table = 'products';
 
-    protected $fillable = ['name','type','desc','quantity','price'];
+    protected $fillable = ['name', 'type', 'desc', 'quantity', 'min_quantity', 'price', 'status_id'];
+    
+    public function ProductStatus()
+    {
+        return $this->belongsTo(ProductStatus::class, 'status_id');
+    }
 }

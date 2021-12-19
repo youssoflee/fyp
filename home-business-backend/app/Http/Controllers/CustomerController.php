@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Customer;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
@@ -15,11 +17,10 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customer = Customer::all();
-        return response()->json([
-            'status' => 200,
+        $customer = Customer::with('User')->get();
+        return response([
             'customers' => $customer,
-        ]);
+        ], 200);
     }
 
     /**
@@ -33,7 +34,7 @@ class CustomerController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'password' => 'required',
+            // 'password' => 'required',
             'phone_num' => 'required',
             'address' => 'required',
             'zipcode' => 'required',
@@ -41,7 +42,22 @@ class CustomerController extends Controller
             'state' => 'required',
         ]);
 
-        $customer = Customer::create($request->all());
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt("!Abc123"),
+            'role_id' => 2,
+            'created_at' => Carbon::now(),
+        ]);
+
+        $customer = Customer::create([
+            'user_id' => $user->id,
+            'phone_num' => $request->phone_num,
+            'address' => $request->address,
+            'zipcode' => $request->zipcode,
+            'city' => $request->city,
+            'state' => $request->state,
+        ]);
 
         if ($customer) {
             return response()->json([
@@ -54,44 +70,6 @@ class CustomerController extends Controller
                 'customer' => 'No customer ID FOUND',
             ]);
         };
-
-
-        // $validator = Validator::make($request->all(),[
-        //     'name'=>'required|max:191',
-        //     'email'=>'required|email|max:191',
-        //     'password'=>'required|max:191',
-        //     'phone_num'=>'required|max:191|min:10',
-        //     'address'=>'required|max:191',
-        //     'zipcode'=>'required|max:191|min:5',
-        //     'city'=>'required|max:191',
-        //     'state'=>'required|max:191',
-        // ]);
-
-        // if($validator->fails())
-        // {
-        //     return response()->json([
-        //         'validate_err'=> $validator->messages(),
-        //     ]);
-        // }
-        // else
-        // {
-        // $customer = new Customer;
-        // $customer = Customer::find($id);
-        // if(Customer::create($request->all()))
-        // {
-        //     return response()->json([
-        //         'status'=> 200,
-        //         'message'=> 'Customer Added Successfully',
-        //     ]);
-        // }
-        // else
-        // {
-        //     return response()->json([
-        //         'status'=> 404,
-        //         'customer'=> 'No customer ID FOUND',
-        //     ]);
-        // }
-        // }
     }
 
     /**
@@ -143,7 +121,7 @@ class CustomerController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:191',
             'email' => 'required|email|max:191',
-            'password' => 'required|max:191',
+            // 'password' => 'required|max:191',
             'phone_num' => 'required|max:191|min:10',
             'address' => 'required|max:191',
             'zipcode' => 'required|max:191|min:5',
@@ -156,12 +134,15 @@ class CustomerController extends Controller
                 'validate_err' => $validator->messages(),
             ]);
         } else {
-            $customer = new Customer;
+            $user = User::find($request->user_id);
+            echo $user;
+            //     // $customer = new Customer;
             $customer = Customer::find($id);
+            echo $customer;
             if ($customer) {
-                $customer->name = $request->input('name');
-                $customer->email = $request->input('email');
-                $customer->password = $request->input('password');
+                $user->name = $request->input('name');
+                $user->email = $request->input('email');
+                $user->save();
                 $customer->phone_num = $request->input('phone_num');
                 $customer->address = $request->input('address');
                 $customer->zipcode = $request->input('zipcode');
@@ -198,12 +179,18 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        $customer = Customer::find($id);
-        // Customer::destroy($id);
-        $customer->delete();
+        $customer = Customer::with('User')->find($id);
+        $res = User::destroy($customer->user->id);
+        // $customer->delete();
+        if ($res) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Customer deleted successfully',
+            ]);
+        }
         return response()->json([
-            'status' => 200,
-            'message' => 'Customer deleted successfully',
+            'status' => 400,
+            'message' => 'Customer was not deleted. Try again!',
         ]);
     }
 }

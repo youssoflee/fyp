@@ -67,7 +67,7 @@ class ModalAddCustomer extends Component {
               </CCol>
             </CRow>
             <CRow>
-              <CCol xs="12">
+              {/* <CCol xs="12">
                 <CFormGroup>
                   <CLabel htmlFor="password">Password</CLabel>
                   <CInput
@@ -77,7 +77,7 @@ class ModalAddCustomer extends Component {
                     onChange={this.props.handleChange}
                   />
                 </CFormGroup>
-              </CCol>
+              </CCol> */}
               <CCol xs="12">
                 <CFormGroup>
                   <CLabel htmlFor="phone_num">Phone</CLabel>

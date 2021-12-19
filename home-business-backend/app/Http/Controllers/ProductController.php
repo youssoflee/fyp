@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         // return Product::all();
-        $product = Product::all();
+        $product = Product::with('ProductStatus')->get();
         return response()->json([
             'status' => 200,
             'products' => $product,
@@ -57,8 +57,7 @@ class ProductController extends Controller
             // 'city' => 'required',
             // 'state' => 'required',
         ]);
-
-        $product = Product::create($request->all());
+        $product = Product::create(array_merge($request->all(), ['min_quantity' => 10, 'status_id' => 2]));
 
         if ($product) {
             return response()->json([

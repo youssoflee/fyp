@@ -26,7 +26,8 @@ class Customer extends Component {
       isAddCustomer: true,
 
       // deleteModal: false,
-      id: "",
+      customer_id: "",
+      user_id: "",
       name: "",
       email: "",
       password: "",
@@ -52,6 +53,7 @@ class Customer extends Component {
       isLoading: true,
     });
     api.get("api/getAllCustomer").then((response) => {
+      console.log(response.data);
       this.setState({
         customers: response.data.customers,
         isLoading: false,
@@ -94,7 +96,7 @@ class Customer extends Component {
   setAddForm() {
     this.setState({
       isAddCustomer: true,
-      id: "",
+      customer_id: "",
       name: "",
       email: "",
       password: "",
@@ -108,10 +110,11 @@ class Customer extends Component {
   }
 
   setEditForm(item) {
-    // console.log(item);
+    console.log(item);
     this.setState({
       isAddCustomer: false,
-      id: item.id,
+      customer_id: item.customer_id,
+      user_id: item.user_id,
       name: item.name,
       email: item.email,
       password: item.password,
@@ -164,29 +167,31 @@ class Customer extends Component {
         //   "/admin/users/user-details/" + response.data.id;
       })
       .catch((error) => {
-        // console.log(error.response.data);
+        console.log(error.response.data);
         swal.fire({
           title: "Error",
-          text: error.response.data,
+          text: error.response.data.message,
           icon: "error",
         });
       });
   }
 
   updateData() {
-    // console.log(this.state.name);
+    console.log(this.state);
     const data = {
+      user_id: this.state.user_id,
       name: this.state.name,
       email: this.state.email,
-      password: this.state.password,
+      // password: this.state.password,
       phone_num: this.state.phone_num,
       address: this.state.address,
       zipcode: this.state.zipcode,
       city: this.state.city,
       state: this.state.state,
     };
+    console.log(this.state.customer_id, data);
     api
-      .put("/api/updateCustomer/" + this.state.id, data)
+      .put("/api/updateCustomer/" + this.state.customer_id, data)
       .then(() => {
         // this.setState({
         //   isLoading: !this.state.isLoading,
@@ -218,11 +223,11 @@ class Customer extends Component {
   }
 
   // OK
-  delCustomer = async (e, id) => {
+  delCustomer = async (e, customer_id) => {
     // const thidClickedFunda = e.currentTarget;
     // thidClickedFunda.innerText = "Deleting";
 
-    const res = await api.delete(`/api/delCustomer/${id}`);
+    const res = await api.delete(`/api/delCustomer/${customer_id}`);
     if (res.data.status === 200) {
       swal.fire({
         title: "Deleted!",
@@ -240,7 +245,7 @@ class Customer extends Component {
     // const { isLoading, modal, addCustomer } = this.state;
     const fields = [
       "no",
-      // "id",
+      // "customer_id",
       "name",
       "email",
       // "password",
@@ -256,11 +261,12 @@ class Customer extends Component {
     this.state.customers.forEach((customer) => {
       number = number + 1;
       listOfCustomer.push({
-        id: customer.id,
+        customer_id: customer.id,
         no: number,
-        name: customer.name,
-        email: customer.email,
-        password: customer.password,
+        user_id: customer.user_id,
+        name: customer.user.name,
+        email: customer.user.email,
+        // password: customer.user.password,
         phone_num: customer.phone_num,
         address: customer.address,
         zipcode: customer.zipcode,
@@ -278,7 +284,7 @@ class Customer extends Component {
           <CCardHeader>
             <CRow>
               <CCol sm={8}>
-                <h3>List of Users</h3>{" "}
+                <h3>List of Customers</h3>{" "}
               </CCol>
               <CCol className="d-grid gap-2 d-md-flex justify-content-md-end">
                 <CButton
@@ -304,7 +310,7 @@ class Customer extends Component {
                 pagination
                 hover
                 clickableRows
-                onRowClick={(item) => this.detailPage(item.Id)}
+                onRowClick={(item) => this.detailPage(item.customer_id)}
                 scopedSlots={{
                   action: (item) => (
                     <td onClick={this.disableOnRowClick}>
@@ -319,7 +325,7 @@ class Customer extends Component {
                       <CButton
                         color="danger"
                         variant="outline"
-                        onClick={(e) => this.delCustomer(e, item.id)}
+                        onClick={(e) => this.delCustomer(e, item.customer_id)}
                       >
                         <CIcon name="cil-trash" />
                       </CButton>
@@ -334,7 +340,7 @@ class Customer extends Component {
           // state
           name={this.state.name}
           email={this.state.email}
-          password={this.state.password}
+          // password={this.state.password}
           phone_num={this.state.phone_num}
           address={this.state.address}
           zipcode={this.state.zipcode}

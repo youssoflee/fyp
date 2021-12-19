@@ -15,15 +15,16 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('password');
-            $table->string('phone_num');
-            $table->string('address');
-            $table->string('zipcode');
-            $table->string('city');
-            $table->string('state');
+            $table->unsignedBigInteger('user_id');
+            $table->string('full_name')->nullable();
+            $table->string('phone_num')->nullable();
+            $table->string('address')->nullable();
+            $table->string('zipcode')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
