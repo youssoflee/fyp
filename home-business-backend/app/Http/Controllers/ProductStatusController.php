@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ProductStatus;
 
-class ProductStatus extends Controller
+class ProductStatusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,10 @@ class ProductStatus extends Controller
      */
     public function index()
     {
-        //
+        $status = ProductStatus::with('StatusColor')->get();
+        return response()->json([
+            'statuses' => $status,
+        ], 200);
     }
 
     /**

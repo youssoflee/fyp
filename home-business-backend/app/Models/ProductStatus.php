@@ -13,4 +13,9 @@ class ProductStatus extends Model
         'status',
         'color_id',
     ];
+
+    public function StatusColor()
+    {
+        return $this->belongsTo(StatusColor::class, 'color_id');
+    }
 }

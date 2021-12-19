@@ -6,6 +6,7 @@ import {
     CCol,
     CRow,
     CDataTable,
+    CBadge,
   } from "@coreui/react";
   import React, { Component } from "react";
 //   import { Link } from "react-router-dom";
@@ -21,6 +22,7 @@ import {
       super(props);
       this.state = {
         products: [],
+        statuses: [],
         isLoading: false,
         isModal: false,
         isAddProduct: true,
@@ -39,6 +41,7 @@ import {
     }
     componentDidMount() {
       this.loadProducts();
+      this.loadStatuses();
     }
   
     // OK
@@ -51,6 +54,15 @@ import {
         this.setState({
           products: response.data.products,
           isLoading: false,
+        });
+      });
+    }
+
+    loadStatuses() {
+      api.get("/api/getAllProductStatus").then((res) => {
+        console.log(res.data);
+        this.setState({
+          statuses: res.data.statuses,
         });
       });
     }
@@ -210,6 +222,7 @@ import {
     // };
   
     render() {
+      console.log(this.state.statuses);
       const fields = [
         "no",
         // "id",
@@ -223,8 +236,16 @@ import {
       ];
       const listOfProduct = [];
       let number = 0;
+      let statusName = "";
+      let colorName = "";
       // console.log(this.state.products);
       this.state.products.forEach((product) => {
+        this.state.statuses.forEach(status => {
+          if (status.id === product.status_id) {
+            statusName = status.status;
+            colorName = status.status_color.color;
+          }
+        });
         number = number + 1;
         listOfProduct.push({
         //   id: product.id,
@@ -233,7 +254,8 @@ import {
           type: product.type,
           description: product.desc,
         //   quantity: product.quantity,
-          status: product.product_status.status,
+          statusName: statusName,
+          colorName: colorName,
           price: product.price,
           //       email: customer.email,
           //       password: customer.password,
@@ -281,7 +303,14 @@ import {
                   hover
                   clickableRows
                   onRowClick={(item) => this.detailPage(item.Id)}
-                //   scopedSlots={{
+                  scopedSlots={{
+                    status:(item) => (
+                      <td>
+                        <CBadge color={item.colorName} className="p-1">
+                          {item.statusName}
+                        </CBadge>
+                      </td>
+                    )
                 //     action: (item) => (
                 //       <td onClick={this.disableOnRowClick}>
                 //         <CButton
@@ -301,7 +330,7 @@ import {
                 //         </CButton>
                 //       </td>
                 //     ),
-                //   }}
+                  }}
                 />
               )}
             </CCardBody>
