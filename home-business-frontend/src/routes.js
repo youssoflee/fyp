@@ -1,4 +1,5 @@
 import React from 'react';
+// import Product from './views/homeBusinessPages/Products/Product';
 
 const Toaster = React.lazy(() => import('./views/notifications/toaster/Toaster'));
 const Tables = React.lazy(() => import('./views/base/tables/Tables'));
@@ -39,7 +40,13 @@ const Users = React.lazy(() => import('./views/users/Users'));
 const User = React.lazy(() => import('./views/users/User'));
 
 
-const Customer = React.lazy(() => import('./views/homeBusinessPages/Customers/Customer'))
+const Customer = React.lazy(() => import('./views/homeBusinessPages/Customers/Customer'));
+const Product = React.lazy(() => import('./views/homeBusinessPages/Products/Product'));
+const Order = React.lazy(() => import('./views/homeBusinessPages/Orders/Order'));
+const Statistic = React.lazy(() => import('./views/homeBusinessPages/Statistics/Statistic'));
+const Shop = React.lazy(() => import('./views/homeBusinessPages/Shops/Shop'));
+const Purchase = React.lazy(() => import('./views/homeBusinessPages/Purchases/Purchase'));
+
 // const AddCustomer = React.lazy(() => import('./views/homeBusinessPages/Customers/Addcustomer'))
 // const EditCustomer = React.lazy(() => import('./views/homeBusinessPages/Customers/Editcustomer'))
 
@@ -50,7 +57,13 @@ const routes = [
   
    // start
 
-   { path: '/customer', name: 'Customer', component: Customer },
+   { path: '/customer', name: 'User', component: Customer },
+   { path: '/product', name: 'Product', component: Product },
+   { path: '/order', name: 'Order', component: Order },
+   { path: '/statistic', name: 'Statistic', component: Statistic },
+   { path: '/shop', name: 'Shop', component: Shop },
+   { path: '/purchase', name: 'Purchase', component: Purchase },
+
   //  { path: '/addcustomer', name: 'Add Customer', component: AddCustomer },
   //  { path: '/editcustomer/3', name: 'Edit Customer', component: EditCustomer },
    

@@ -18,6 +18,9 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('type');
             $table->string('desc');
+            $table->unsignedBigInteger('status_id');
+            $table->foreign('status_id')->references('id')->on('product_status');
+            $table->string('min_quantity');
             $table->string('quantity');
             $table->string('price');
             $table->timestamps();

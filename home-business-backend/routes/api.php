@@ -24,8 +24,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/getAllCustomer', [CustomerController::class, 'index']);
 Route::post('/addCustomer', [CustomerController::class, 'store']);
 Route::get('/showCustomer/{id}', [CustomerController::class, 'show']);
-Route::put('/updateCustomer/{id}', [CustomerController::class, 'update']);
-Route::delete('/destroyCustomer/{id}', [CustomerController::class, 'destroy']);
+Route::get('/editCustomer/{id}', [CustomerController::class, 'edit']);
+Route::put('/updateCustomer/{id}' ,[CustomerController::class, 'update']);
+Route::delete('/delCustomer/{id}', [CustomerController::class, 'destroy']);
 
 Route::get('/getAllAdmin', [AdminController::class, 'index']);
 Route::post('/addAdmin', [AdminController::class, 'store']);
@@ -37,7 +38,7 @@ Route::get('/getAllProduct', [ProductController::class, 'index']);
 Route::post('/addProduct', [ProductController::class, 'store']);
 Route::get('/showProduct/{id}', [ProductController::class, 'show']);
 Route::put('/updateProduct/{id}', [ProductController::class, 'update']);
-Route::delete('/destroyProduct/{id}', [ProductController::class, 'destroy']);
+Route::delete('/delProduct/{id}', [ProductController::class, 'destroy']);
 
 Route::get('/getAllPayment', [PaymentController::class, 'index']);
 Route::post('/addPayment', [PaymentController::class, 'store']);
