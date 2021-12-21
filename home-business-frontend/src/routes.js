@@ -1,4 +1,5 @@
 import React from 'react';
+import Roles from "./services/Roles";
 // import Product from './views/homeBusinessPages/Products/Product';
 
 const Toaster = React.lazy(() => import('./views/notifications/toaster/Toaster'));
@@ -39,7 +40,7 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'));
 const Users = React.lazy(() => import('./views/users/Users'));
 const User = React.lazy(() => import('./views/users/User'));
 
-
+const RefreshAfterLogin = React.lazy(() => import('./views/homeBusinessPages/RefreshAfterLogin'));
 const Customer = React.lazy(() => import('./views/homeBusinessPages/Customers/Customer'));
 const Product = React.lazy(() => import('./views/homeBusinessPages/Products/Product'));
 const Order = React.lazy(() => import('./views/homeBusinessPages/Orders/Order'));
@@ -52,17 +53,16 @@ const Purchase = React.lazy(() => import('./views/homeBusinessPages/Purchases/Pu
 
 
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
+  { path: '/', exact: true, name: 'Home', component: RefreshAfterLogin },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   
    // start
-
-   { path: '/customer', name: 'User', component: Customer },
-   { path: '/product', name: 'Product', component: Product },
-   { path: '/order', name: 'Order', component: Order },
-   { path: '/statistic', name: 'Statistic', component: Statistic },
-   { path: '/shop', name: 'Shop', component: Shop },
-   { path: '/purchase', name: 'Purchase', component: Purchase },
+   { path: '/seller/customer', name: 'Customer', component: Customer, permission: [Roles.SELLER] },
+   { path: '/seller/product', name: 'Product', component: Product, permission: [Roles.SELLER] },
+   { path: '/seller/order', name: 'Order', component: Order, permission: [Roles.SELLER] },
+   { path: '/seller/statistic', name: 'Statistic', component: Statistic, permission: [Roles.SELLER] },
+   { path: '/customer/shop', name: 'Shop', component: Shop, permission: [Roles.CUSTOMER] },
+   { path: '/customer/purchase', name: 'Purchase', component: Purchase, permission: [Roles.CUSTOMER] },
 
   //  { path: '/addcustomer', name: 'Add Customer', component: AddCustomer },
   //  { path: '/editcustomer/3', name: 'Edit Customer', component: EditCustomer },

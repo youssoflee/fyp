@@ -1,6 +1,7 @@
 // import React from "react";
 // import CIcon from "@coreui/icons-react";
 // import { cilFastfood, freeSet } from "@coreui/icons";
+import Roles from "../services/Roles";
 
 const _nav = [
   // {
@@ -15,55 +16,62 @@ const _nav = [
   // },
   {
     _tag: "CSidebarNavTitle",
-    _children: ["Admin"],
+    _children: ["Seller"],
+    permission: [Roles.SELLER],
   },
   {
     _tag: "CSidebarNavItem",
     // component: CNavItem,
-    name: "Users",
-    to: "/customer",
+    name: "Customers",
+    to: "/seller/customer",
     icon: "cil-user",
+    permission: [Roles.SELLER],
   },
   {
     _tag: "CSidebarNavItem",
     // component: CNavItem,
     name: "Products",
-    to: "/product",
+    to: "/seller/product",
     icon: "cil-pencil",
+    permission: [Roles.SELLER],
   },
   {
     _tag: "CSidebarNavItem",
     // component: CNavItem,
     name: "Orders",
-    to: "/order",
+    to: "/seller/order",
     icon: "cil-tags",
-  },
+    permission: [Roles.SELLER],
+  }, 
   {
     _tag: "CSidebarNavItem",
     // component: CNavItem,
     name: "Statistics",
-    to: "/statistic",
+    to: "/seller/statistic",
     icon: "cil-chart-pie",
+    permission: [Roles.SELLER],
   },
   {
     _tag: "CSidebarNavTitle",
     _children: ["Customer"],
+    permission: [Roles.CUSTOMER],
   },
   {
     _tag: "CSidebarNavItem",
     // component: CNavItem,
     name: "Shop",
-    to: "/shop",
+    to: "/customer/shop",
     icon: "cil-chart-pie",
+    permission: [Roles.CUSTOMER],
   },
   {
     _tag: "CSidebarNavItem",
     // component: CNavItem,
     name: "Purchase History",
-    to: "/purchase",
+    to: "/customer/purchase",
     icon: "cil-chart-pie",
+    permission: [Roles.CUSTOMER],
   },
-  
 
   // {
   //   _tag: 'CSidebarNavTitle',
