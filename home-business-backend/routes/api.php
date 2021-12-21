@@ -24,7 +24,7 @@ use App\Http\Controllers\ProductStatusController;
 */
 
 
-Route::post('/registerShopOwner', [AuthController::class, 'registerShopOwner']);
+Route::post('/registerSeller', [AuthController::class, 'registerShopSeller']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/registerCustomer', [UserController::class, 'registerCustomer']);
