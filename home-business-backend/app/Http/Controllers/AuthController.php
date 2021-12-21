@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function registerShopOwner(Request $request)
+    public function registerSeller(Request $request)
     {
         $fields = $request->validate([
             'name' => 'required|string',
@@ -25,7 +25,7 @@ class AuthController extends Controller
             'role_id' => 1,
         ]);
 
-        $token = $user->createToken('register owner')->plainTextToken;
+        $token = $user->createToken('register seller')->plainTextToken;
 
         $response = [
             'user' => $user,

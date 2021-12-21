@@ -22,7 +22,7 @@ class CreateUserRolesTable extends Migration
 
         Schema::table('user_roles', function (Blueprint $table) {
             $data = [
-                ["role" => "Owner"],
+                ["role" => "Seller"],
                 ["role" => "Customer"],
             ];
 
