@@ -36,10 +36,18 @@ class UserController extends Controller
 
         Customer::create(['user_id' => $user->id]);
 
+        $role = UserRole::where('id', 2)->first()->role;
+
         $token = $user->createToken('register')->plainTextToken;
 
+        $currentUser = [
+            'name' =>   $user->name,
+            'email' => $user->email,
+            'role' => $role
+        ];
+
         $response = [
-            'user' => $user,
+            'user' => $currentUser,
             'token' => $token
         ];
 

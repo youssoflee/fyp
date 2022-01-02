@@ -5,6 +5,7 @@ import {
   CButton,
   CCard,
   CCardBody,
+  CCardFooter,
   CCardGroup,
   CCol,
   CContainer,
@@ -26,16 +27,16 @@ class Login extends Component {
       email: "",
       password: "",
       toHome: null,
-      showAlert: false,
+      // showAlert: false,
     };
   }
 
   componentDidMount() {
-    console.log(window.history);
-    console.log(window.history.length > 2);
-    if (window.history.length > 2) {
-      this.setState({ showAlert: true });
-    }
+    // console.log(window.history);
+    // console.log(window.history.length > 2);
+    // if (window.history.length > 2) {
+    //   this.setState({ showAlert: true });
+    // }
   }
 
   handleEmail(e) {
@@ -80,14 +81,14 @@ class Login extends Component {
       <div className="c-app c-default-layout flex-row align-items-center">
         <CContainer>
           <CRow className="justify-content-center">
-            <CCol md="8">
+            <CCol md="5">
               <CCardGroup>
                 <CCard className="p-4">
-                  {this.state.showAlert && (
+                  {/* {this.state.showAlert && (
                     <div className="alert alert-warning">
                       You are not logged in. Please login first.
                     </div>
-                  )}
+                  )} */}
                   <CCardBody>
                     <CForm>
                       <h1>Login</h1>
@@ -136,31 +137,12 @@ class Login extends Component {
                       </CRow>
                     </CForm>
                   </CCardBody>
-                </CCard>
-                <CCard
-                  className="text-white bg-primary py-5 d-md-down-none"
-                  style={{ width: "44%" }}
-                >
-                  <CCardBody className="text-center">
-                    <div>
-                      <h2>Sign up</h2>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut labore et
-                        dolore magna aliqua.
-                      </p>
-                      <Link to="/register">
-                        <CButton
-                          color="primary"
-                          className="mt-3"
-                          active
-                          tabIndex={-1}
-                        >
-                          Register Now!
-                        </CButton>
-                      </Link>
+                  <CCardFooter>
+                    <div style={{textAlign: 'center',}}>
+                      New to Home Business? &nbsp;
+                      <Link to="/register">Sign Up</Link>
                     </div>
-                  </CCardBody>
+                  </CCardFooter>
                 </CCard>
               </CCardGroup>
             </CCol>
