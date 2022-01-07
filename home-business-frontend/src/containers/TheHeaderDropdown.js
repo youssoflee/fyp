@@ -23,11 +23,15 @@ class TheHeaderDropdown extends Component {
         <CDropdownToggle className="c-header-nav-link">
           <CIcon name="cil-user" className="mfe-2" />
         </CDropdownToggle>
-        <CDropdownMenu className="pt-0" placement="bottom-end">
-          {/* <CDropdownItem to="/admin/change-password">
-            <CIcon name="cil-lock-locked" className="mfe-2" />
+        <CDropdownMenu className="pt-0" placement="bottom-end" >
+          <CDropdownItem to="/personal-information">
+            <CIcon content={freeSet.cilInfo} customClasses="c-sidebar-nav-icon" className="mfe-2" />
+            My Information 
+          </CDropdownItem>
+          <CDropdownItem to="/change-password">
+            <CIcon name="cil-lock-locked" customClasses="c-sidebar-nav-icon" className="mfe-2" />
             Change Password
-          </CDropdownItem> */}
+          </CDropdownItem>
           <CDropdownItem onClick={this.handleLogOut.bind(this)}>
             <CIcon content={freeSet.cilAccountLogout} customClasses="c-sidebar-nav-icon"  className="mfe-2" />
             Log Out

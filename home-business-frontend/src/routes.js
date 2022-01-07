@@ -47,6 +47,9 @@ const Order = React.lazy(() => import('./views/homeBusinessPages/Orders/Order'))
 const Statistic = React.lazy(() => import('./views/homeBusinessPages/Statistics/Statistic'));
 const Shop = React.lazy(() => import('./views/homeBusinessPages/Shops/Shop'));
 const Purchase = React.lazy(() => import('./views/homeBusinessPages/Purchases/Purchase'));
+const Address = React.lazy(() => import('./views/homeBusinessPages/Address/Address'));
+const ChangePassword = React.lazy(() => import('./views/homeBusinessPages/Passwords/ChangePassword'))
+const PersonalInformation = React.lazy(() => import('./views/homeBusinessPages/Personal/PersonalInformation'));
 
 // const AddCustomer = React.lazy(() => import('./views/homeBusinessPages/Customers/Addcustomer'))
 // const EditCustomer = React.lazy(() => import('./views/homeBusinessPages/Customers/Editcustomer'))
@@ -61,8 +64,13 @@ const routes = [
    { path: '/seller/product', name: 'Product', component: Product, permission: [Roles.SELLER] },
    { path: '/seller/order', name: 'Order', component: Order, permission: [Roles.SELLER] },
    { path: '/seller/statistic', name: 'Statistic', component: Statistic, permission: [Roles.SELLER] },
+  //  { path: '/seller/change-password', name: 'Change Password', component: ChangePassword, permission: [Roles.SELLER] },
    { path: '/customer/shop', name: 'Shop', component: Shop, permission: [Roles.CUSTOMER] },
    { path: '/customer/purchase', name: 'Purchase', component: Purchase, permission: [Roles.CUSTOMER] },
+   { path: '/customer/address', name: 'My Address', component: Address, permission: [Roles.CUSTOMER] },
+   { path: '/change-password', name: 'Change Password', component: ChangePassword },
+   { path: '/personal-information', name: 'Personal Information', component: PersonalInformation },
+
 
   //  { path: '/addcustomer', name: 'Add Customer', component: AddCustomer },
   //  { path: '/editcustomer/3', name: 'Edit Customer', component: EditCustomer },

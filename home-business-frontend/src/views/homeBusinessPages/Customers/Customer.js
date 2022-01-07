@@ -99,7 +99,7 @@ class Customer extends Component {
       customer_id: "",
       name: "",
       email: "",
-      password: "",
+      password: "" ,
       phone_num: "",
       address: "",
       zipcode: "",

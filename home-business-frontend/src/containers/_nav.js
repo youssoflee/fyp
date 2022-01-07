@@ -14,11 +14,11 @@ const _nav = [
   //     text: 'NEW',
   //   }
   // },
-  {
-    _tag: "CSidebarNavTitle",
-    _children: ["Seller"],
-    permission: [Roles.SELLER],
-  },
+  // {
+  //   _tag: "CSidebarNavTitle",
+  //   _children: ["Seller"],
+  //   permission: [Roles.SELLER],
+  // },
   {
     _tag: "CSidebarNavItem",
     // component: CNavItem,
@@ -51,11 +51,11 @@ const _nav = [
     icon: "cil-chart-pie",
     permission: [Roles.SELLER],
   },
-  {
-    _tag: "CSidebarNavTitle",
-    _children: ["Customer"],
-    permission: [Roles.CUSTOMER],
-  },
+  // {
+  //   _tag: "CSidebarNavTitle",
+  //   _children: ["Customer"],
+  //   permission: [Roles.CUSTOMER],
+  // },
   {
     _tag: "CSidebarNavItem",
     // component: CNavItem,
@@ -69,6 +69,14 @@ const _nav = [
     // component: CNavItem,
     name: "Purchase History",
     to: "/customer/purchase",
+    icon: "cil-chart-pie",
+    permission: [Roles.CUSTOMER],
+  },
+  {
+    _tag: "CSidebarNavItem",
+    // component: CNavItem,
+    name: "My Address",
+    to: "/customer/address",
     icon: "cil-chart-pie",
     permission: [Roles.CUSTOMER],
   },

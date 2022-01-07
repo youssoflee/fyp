@@ -78,7 +78,7 @@ import {
     disableOnRowClick(e) {
       e.stopPropagation();
     }
-  
+
     // resetForm() {
     //   this.setState({
     //     name: "",
@@ -302,7 +302,7 @@ import {
                   pagination
                   hover
                   clickableRows
-                  onRowClick={(item) => this.detailPage(item.Id)}
+                  // onRowClick={(item) => this.detailPage(item.Id)}
                   scopedSlots={{
                     status:(item) => (
                       <td>

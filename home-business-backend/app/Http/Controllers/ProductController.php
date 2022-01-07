@@ -121,7 +121,7 @@ class ProductController extends Controller
         //     'quantity' => 'required',
         //     'price' => 'required'
         // ]);
-    
+
         // $order = Product::find($id);
         // $order->update($request->all());
         // return $order;
@@ -191,5 +191,32 @@ class ProductController extends Controller
             'status' => 200,
             'message' => 'Product deleted successfully',
         ]);
+    }
+
+    public function checkStock()
+    {
+        $products = Product::all();
+        foreach ($products as $p) {
+            if ($p->quantity <= $p->min_quantity) {
+                $p->status_id = 3;
+            } else if ($p->quantity > $p->min_quantity) {
+                $p->status_id = 1;
+            } else if ($p->quantity == 0) {
+                $p->status_id = 2;
+            }
+            $p->save();
+        }
+        return $products;
+    }
+
+    public function addStock(Request $request, $id)
+    {
+        $product = Product::find($id);
+        if ($product) {
+            $product->quantity = $product->quantity + $request->input('quantity');;
+            $product->save();
+        }
+        // return $product->quantity + input('quantity');
+        return $product;
     }
 }

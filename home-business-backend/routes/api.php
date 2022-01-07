@@ -30,10 +30,13 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/registerCustomer', [UserController::class, 'registerCustomer']);
 Route::get('/getUsers', [UserController::class, 'index']);
 
+Route::post('/changePassword', [AuthController::class, 'changePassword']);
+
 Route::get('/getAllCustomer', [CustomerController::class, 'index']);
 Route::post('/addCustomer', [CustomerController::class, 'store']);
 Route::get('/showCustomer/{id}', [CustomerController::class, 'show']);
 Route::get('/editCustomer/{id}', [CustomerController::class, 'edit']);
+Route::get('/AddressDetails/{id}', [CustomerController::class, 'details']);
 Route::put('/updateCustomer/{id}', [CustomerController::class, 'update']);
 Route::delete('/delCustomer/{id}', [CustomerController::class, 'destroy']);
 
@@ -48,6 +51,8 @@ Route::post('/addProduct', [ProductController::class, 'store']);
 Route::get('/showProduct/{id}', [ProductController::class, 'show']);
 Route::put('/updateProduct/{id}', [ProductController::class, 'update']);
 Route::delete('/delProduct/{id}', [ProductController::class, 'destroy']);
+Route::put('/addStock/{id}', [ProductController::class, 'addStock']);
+Route::get('/checkStock', [ProductController::class, 'checkStock']);
 
 Route::get('/getAllProductStatus', [ProductStatusController::class, 'index']);
 

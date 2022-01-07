@@ -15,6 +15,7 @@ import api from "src/services/api";
 import swal from "sweetalert2";
 import Loader from "src/containers/Loader";
 import ModalProduct from "./ModalProduct";
+import ModalProductStock from "./ModalProductStock";
 
 class Product extends Component {
   constructor(props) {
@@ -31,11 +32,13 @@ class Product extends Component {
       type: "",
       desc: "",
       quantity: "",
+      newQuantity:"",
       price: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.disableOnRowClick = this.disableOnRowClick.bind(this);
     this.setModal = this.setModal.bind(this);
+    this.setQuantityModal = this.setQuantityModal.bind(this);
   }
   componentDidMount() {
     this.loadProducts();
@@ -47,7 +50,8 @@ class Product extends Component {
       isLoading: true,
     });
     api.get("api/getAllProduct").then((response) => {
-    // console.log(response.data);
+      api.get("api/checkStock");
+      // console.log(response.data);
       this.setState({
         products: response.data.products,
         isLoading: false,
@@ -81,6 +85,10 @@ class Product extends Component {
     this.setState((prevState) => ({ isModal: !prevState.isModal }));
   }
 
+  setQuantityModal() {
+    this.setState((prevState) => ({ isQuantityModal: !prevState.isQuantityModal }));
+  }
+
   setAddForm() {
     this.setState({
       isAddProduct: true,
@@ -106,6 +114,45 @@ class Product extends Component {
       price: item.price,
     });
     this.setModal();
+  }
+
+  setAddQuantityForm(item) {
+    // console.log(item);
+    this.setState({
+      id: item.id,
+    });
+    this.setQuantityModal();
+  }
+
+  addStock() {
+    this.setQuantityModal();
+    const data = {
+      quantity: this.state.newQuantity,
+    };
+    console.log(data);
+    api.put("/api/addStock/" + this.state.id, data).then((response) => {
+      swal
+        .fire({
+          title: "Stock Added!",
+          icon: "success",
+          showConfirmButton: false,
+        })
+        .then(() => {
+          this.resetForm();
+          this.loadProducts();
+          this.setState({
+            isLoading: !this.state.isLoading,
+          });
+        });
+    })
+    .catch((error) => {
+      // console.log(error.response.data);
+      swal.fire({
+        title: "Error",
+        text: error.response.data,
+        icon: "error",
+      });
+    });
   }
 
   // OK
@@ -194,6 +241,8 @@ class Product extends Component {
           text: error,
           icon: "error",
           button: "OK!",
+
+          
         });
       });
   }
@@ -222,7 +271,7 @@ class Product extends Component {
       "id",
       "name",
       // "type",
-      // "desc",
+      "desc",
       "quantity",
       "price",
       "action",
@@ -262,21 +311,14 @@ class Product extends Component {
                 <h3>List of Products</h3>{" "}
               </CCol>
               <CCol className="d-grid gap-2 d-md-flex justify-content-md-end">
-                <CButton className="mr-3"
+                <CButton
+                  className="mr-3"
                   variant="outline"
                   color="dark"
                   onClick={this.setAddForm.bind(this)}
                 >
                   <CIcon content={freeSet.cilPlus} />
                   Product
-                </CButton>
-                <CButton
-                  variant="outline"
-                  color="dark"
-                  onClick={this.setAddForm.bind(this)}
-                >
-                  <CIcon content={freeSet.cilPlus} />
-                  Stock
                 </CButton>
               </CCol>
             </CRow>
@@ -312,6 +354,14 @@ class Product extends Component {
                       >
                         <CIcon name="cil-trash" />
                       </CButton>
+                      &nbsp;
+                      <CButton
+                        color="success"
+                        variant="outline"
+                        onClick={this.setAddQuantityForm.bind(this, item)}
+                      >
+                        <CIcon content={freeSet.cilPlus} />
+                      </CButton>
                     </td>
                   ),
                 }}
@@ -337,6 +387,14 @@ class Product extends Component {
           handleChange={this.handleChange}
           confirmAdd={this.confirmAdd.bind(this)}
           updateData={this.updateData.bind(this)}
+        />
+
+        <ModalProductStock
+          newQuantity={this.state.newQuantity}
+          isQuantityModal={this.state.isQuantityModal}
+          setQuantityModal={this.setQuantityModal}
+          handleChange={this.handleChange}
+          addStock={this.addStock.bind(this)}
         />
       </div>
     );
