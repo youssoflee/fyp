@@ -5,7 +5,7 @@ import {
   CCardHeader,
   CCol,
   CRow,
-  CDataTable,
+  // CDataTable,
 } from "@coreui/react";
 import React, { Component } from "react";
 // import { Link } from "react-router-dom";
@@ -13,8 +13,8 @@ import CIcon from "@coreui/icons-react";
 // import { freeSet } from "@coreui/icons";
 import api from "src/services/api";
 // import swal from "sweetalert2";
-import Loader from "src/containers/Loader";
-import ModalAddress from "./ModalAddress";
+// import Loader from "src/containers/Loader";
+// import ModalAddress from "./ModalAddress";
 
 class Address extends Component {
   constructor(props) {
@@ -22,6 +22,7 @@ class Address extends Component {
     this.state = {
       id: this.props.match.params.id,
       name: "",
+      email: "",
       phone_num: "",
       address: "",
       zipcode: "",
@@ -47,7 +48,25 @@ class Address extends Component {
   }
 
   componentDidMount() {
-    this.getAddressDetails();
+    this.getInformation();
+    // this.getAddressDetails();
+  }
+
+  getInformation() {
+    api.get("/api/getCurrentUser").then((res) => {
+      this.setState({
+        user_id: res.data.id,
+        customer_id: res.data.customer.id,
+        name: res.data.name,
+        email: res.data.email,
+        phone_num: res.data.customer.phone_num,
+        // full_name: res.data.customer.full_name,
+        address: res.data.customer.address,
+        zipcode: res.data.customer.zipcode,
+        city: res.data.customer.city,
+        state: res.data.customer.state,
+      });
+    });
   }
 
   // OK
@@ -61,7 +80,7 @@ class Address extends Component {
           zipcode: response.data.users_role.zipcode,
           city: response.data.city,
           state: response.data.state,
-        },
+        }
         // () =>
         //   this.state.emails.forEach((email) => {
         //     console.log("email", email.email);
@@ -78,25 +97,24 @@ class Address extends Component {
       zipcode,
       city,
       state,
-      inputName,
-      inputEmail,
-      inputStaffId,
-      inputAddEmail,
-      inputAddPassword,
-    } 
-    = this.state;
-    const fields = [
-      "No",
-      {
-        key: "Email",
-        _style: { width: "30%" },
-      },
-      {
-        key: "Password",
-        _style: { width: "30%" },
-      },
-      "Action",
-    ];
+      // inputName,
+      // inputEmail,
+      // inputStaffId,
+      // inputAddEmail,
+      // inputAddPassword,
+    } = this.state;
+    // const fields = [
+    //   "No",
+    //   {
+    //     key: "Email",
+    //     _style: { width: "30%" },
+    //   },
+    //   {
+    //     key: "Password",
+    //     _style: { width: "30%" },
+    //   },
+    //   "Action",
+    // ];
     const listOfAddress = [];
     let No = 0;
     this.state.addresses.forEach((address) => {
@@ -140,28 +158,36 @@ class Address extends Component {
                       <strong>Name</strong>
                     </CCol>
                     <strong>:</strong> */}
-                    <CCol sm={5}><strong>Default Address</strong></CCol>
+                    <CCol sm={5}>
+                      <strong>Default Address</strong>
+                    </CCol>
                   </CRow>
                   <CRow className="py-1">
                     {/* <CCol sm={3}>
                       <strong>Name</strong>
                     </CCol>
                     <strong>:</strong> */}
-                    <CCol sm={5}>Youssof Lee</CCol>
+                    <CCol sm={5}>{name}</CCol>
                   </CRow>
                   <CRow className="py-1">
                     {/* <CCol sm={3}>
                       <strong>Address</strong>
                     </CCol>
                     <strong>:</strong> */}
-                    <CCol sm={5}>Lot 11255, Jalan Melor 2, Kampung Sungai Kantan<br/>Kajang 43000<br/>Selangor</CCol>
+                    <CCol sm={5}>
+                      {address ? address : "address"}
+                      <br />
+                      {city ? city : "city"} {zipcode ? zipcode : "zipcode"}
+                      <br />
+                      {state ? state : "state"}
+                    </CCol>
                   </CRow>
                   <CRow className="py-1">
                     {/* <CCol sm={3}>
                       <strong>Phone Number</strong>
                     </CCol>
                     <strong>:</strong> */}
-                    <CCol sm={5}>0129198587</CCol>
+                    <CCol sm={5}>{phone_num}</CCol>
                   </CRow>
                   {/* <CRow className="py-1">
                     <CCol sm={3}>

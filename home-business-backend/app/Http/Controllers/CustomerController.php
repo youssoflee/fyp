@@ -108,25 +108,15 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $request->validate([
-        //     'name' => 'required',
-        //     'email' => 'required',
-        //     'password' => 'required',
-        //     'phone_num' => 'required',
-        //     'address' => 'required',
-        //     'zipcode' => 'required',
-        //     'city' => 'required',
-        //     'state' => 'required'
-        // ]);
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:191',
             'email' => 'required|email|max:191',
             // 'password' => 'required|max:191',
             'phone_num' => 'required|max:191|min:10',
-            'address' => 'required|max:191',
-            'zipcode' => 'required|max:191|min:5',
-            'city' => 'required|max:191',
-            'state' => 'required|max:191',
+            // 'address' => 'required|max:191',
+            // 'zipcode' => 'required|max:191|min:5',
+            // 'city' => 'required|max:191',
+            // 'state' => 'required|max:191',
         ]);
 
         if ($validator->fails()) {
@@ -135,19 +125,16 @@ class CustomerController extends Controller
             ]);
         } else {
             $user = User::find($request->user_id);
-            echo $user;
-            //     // $customer = new Customer;
             $customer = Customer::find($id);
-            echo $customer;
             if ($customer) {
                 $user->name = $request->input('name');
                 $user->email = $request->input('email');
                 $user->save();
                 $customer->phone_num = $request->input('phone_num');
-                $customer->address = $request->input('address');
-                $customer->zipcode = $request->input('zipcode');
-                $customer->city = $request->input('city');
-                $customer->state = $request->input('state');
+                // // $customer->address = $request->input('address');
+                // // $customer->zipcode = $request->input('zipcode');
+                // // $customer->city = $request->input('city');
+                // // $customer->state = $request->input('state');
                 $customer->save();
                 // echo $name;
                 // echo $phone_num;
