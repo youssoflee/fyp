@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Customer;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -107,5 +108,16 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getCurrentUser()
+    {
+        $currentUser = Auth::user();
+
+        if ($currentUser->role_id == 2) {
+            return User::with('Customer')->find($currentUser->id);
+        } else {
+            return $currentUser;
+        }
     }
 }

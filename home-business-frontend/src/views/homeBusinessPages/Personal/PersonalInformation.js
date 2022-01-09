@@ -8,6 +8,7 @@ import {
   CLabel,
   CInput,
   CButton,
+  CInvalidFeedback,
 } from "@coreui/react";
 import api from "../../../services/api";
 import swal from "sweetalert2";
@@ -15,11 +16,42 @@ import swal from "sweetalert2";
 class PersonalInformation extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      user_id: "",
+      customer_id: "",
+      name: "",
+      email: "",
+      phone_num: "",
+      error_list: [],
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.getInformation();
+  }
+
+  getInformation() {
+    api.get("/api/getCurrentUser").then((res) => {
+      this.setState({
+        user_id: res.data.id,
+        customer_id: res.data.customer.id,
+        name: res.data.name,
+        email: res.data.email,
+        phone_num: res.data.customer.phone_num,
+      });
+    });
   }
 
   updateInformation() {
-    console.log(this.state);
+    swal.fire({
+      title: "Updating",
+      showConfirmButton: false,
+      didOpen: () => {
+        swal.showLoading();
+      },
+    });
     const data = {
       user_id: this.state.user_id,
       name: this.state.name,
@@ -31,30 +63,31 @@ class PersonalInformation extends Component {
       // city: this.state.city,
       // state: this.state.state,
     };
-    console.log(this.state.customer_id, data);
+    // console.log(this.state.customer_id, data);
     api
       .put("/api/updateCustomer/" + this.state.customer_id, data)
-      .then(() => {
-        // this.setState({
-        //   isLoading: !this.state.isLoading,
-        // });
-        this.setModal();
-        swal
-          .fire({
-            title: "Updated!",
-            text: "User updated successfully",
-            icon: "success",
-            button: "OK!",
-          })
-          .then(() => {
-            this.resetForm();
-            this.loadCustomers();
-            // this.setState({
-            //   isLoading: !this.state.isLoading,
-            // });
-          });
+      .then((res) => {
+        swal.close();
+        if (res.data.status === 200) {
+          swal
+            .fire({
+              title: "Updated!",
+              text: "User updated successfully",
+              icon: "success",
+              button: "OK!",
+            })
+            .then(() => {
+              // this.loadCustomers();
+              // this.setState({
+              //   isLoading: !this.state.isLoading,
+              // });
+            });
+        } else {
+          this.setState({ error_list: res.data.validate_err });
+        }
       })
       .catch((error) => {
+        // console.log(error);
         swal.fire({
           title: "Error",
           text: error,
@@ -62,6 +95,10 @@ class PersonalInformation extends Component {
           button: "OK!",
         });
       });
+  }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
@@ -83,34 +120,56 @@ class PersonalInformation extends Component {
                       <CFormGroup>
                         <CLabel htmlFor="name">Name</CLabel>
                         <CInput
-                        // id="newPassword"
-                        // name="newPassword"
-                        // value={newPassword}
-                        // type="password"
-                        // onChange={this.handleChange}
+                          id="name"
+                          name="name"
+                          value={this.state.name}
+                          type="text"
+                          onChange={this.handleChange}
+                          invalid={this.state.error_list["name"] ? true : false}
                         />
+                        <CInvalidFeedback>
+                          {this.state.error_list["name"]}
+                        </CInvalidFeedback>
                       </CFormGroup>
                       <CFormGroup>
                         <CLabel htmlFor="email">Email</CLabel>
                         <CInput
-                        // id="newPassword"F
-                        // name="newPassword"
-                        // value={newPassword}
-                        // type="password"
-                        // onChange={this.handleChange}
+                          id="email"
+                          name="email"
+                          value={this.state.email}
+                          type="text"
+                          onChange={this.handleChange}
+                          invalid={
+                            this.state.error_list["email"] ? true : false
+                          }
                         />
+                        <CInvalidFeedback>
+                          {this.state.error_list["email"]}
+                        </CInvalidFeedback>
                       </CFormGroup>
                       <CFormGroup>
                         <CLabel htmlFor="phone_num">Phone Number</CLabel>
                         <CInput
-                        // id="newPassword"
-                        // name="newPassword"
-                        // value={newPassword}
-                        // type="password"
-                        // onChange={this.handleChange}
+                          id="phone_num"
+                          name="phone_num"
+                          value={
+                            this.state.phone_num ? this.state.phone_num : ""
+                          }
+                          type="text"
+                          onChange={this.handleChange}
+                          invalid={
+                            this.state.error_list["phone_num"] ? true : false
+                          }
                         />
+                        <CInvalidFeedback>
+                          {this.state.error_list["phone_num"]}
+                        </CInvalidFeedback>
                       </CFormGroup>
-                      <CButton block color="success">
+                      <CButton
+                        block
+                        color="success"
+                        onClick={this.updateInformation.bind(this)}
+                      >
                         Save
                       </CButton>
                     </CCol>
