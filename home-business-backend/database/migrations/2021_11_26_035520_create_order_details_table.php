@@ -21,7 +21,8 @@ class CreateOrderDetailsTable extends Migration
             $table->string('amount');
             $table->timestamps();
 
-            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 
