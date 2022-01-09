@@ -75,4 +75,26 @@ class AuthController extends Controller
         auth()->user()->tokens()->delete();
         return response(['message' => 'Logged out'], 200);
     }
+
+    public function changePassword(Request $request)
+    {
+        $fields = $request->validate([
+            'currentPassword' => 'required',
+            'newPassword' => 'required',
+            'confirmPassword' => 'required|same:newPassword',
+        ]);
+
+        $currentUser = auth()->user();
+
+        if (!Hash::check($fields['currentPassword'], $currentUser->password)) {
+            return response([
+                'message' => 'Your current password is invalid'
+            ], 401);
+        }
+
+        $currentUser->password = bcrypt($fields['newPassword']);
+        $currentUser->save();
+
+        return $currentUser;
+    }
 }

@@ -9,7 +9,7 @@ import {
   CInput,
   CButton,
 } from "@coreui/react";
-import api from "src/services/api";
+import api from "../../../services/api";
 import swal from "sweetalert2";
 
 class ChangePassword extends Component {
@@ -23,12 +23,12 @@ class ChangePassword extends Component {
       validCurrentPassword: false,
       validNewPassword: false,
       validConfirmPassword: false,
-      // validConditionOne: false,
-      // validConditionTwo: false,
-      // validConditionThree: false,
-      // validChangePassword: false,
+      validConditionOne: false,
+      validConditionTwo: false,
+      validConditionThree: false,
+      validChangePassword: false,
     };
-    
+
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -47,22 +47,22 @@ class ChangePassword extends Component {
     let currentPassword = this.state.validCurrentPassword;
     let newPassword = this.state.validNewPassword;
     let confirmPassword = this.state.validConfirmPassword;
-    // let conditionOne = this.state.validConditionOne;
-    // let conditionTwo = this.state.validConditionTwo;
-    // let conditionThree = this.state.validConditionThree;
+    let conditionOne = this.state.validConditionOne;
+    let conditionTwo = this.state.validConditionTwo;
+    let conditionThree = this.state.validConditionThree;
 
     switch (name) {
       case "currentPassword":
         currentPassword = value.length > 0;
         break;
-      // case "newPassword":
-      //   const validRegexCapitalLetter = /^(.*[A-Z].*)$/;
-      //   const validRegexDigit = /^(.*\d.*)$/;
-      //   conditionOne = validRegexCapitalLetter.test(value);
-      //   conditionTwo = validRegexDigit.test(value);
-      //   conditionThree = value.length >= 6;
-      //   newPassword = conditionOne && conditionTwo && conditionThree;
-      //   break;
+      case "newPassword":
+        const validRegexCapitalLetter = /^(.*[A-Z].*)$/;
+        const validRegexDigit = /^(.*\d.*)$/;
+        conditionOne = validRegexCapitalLetter.test(value);
+        conditionTwo = validRegexDigit.test(value);
+        conditionThree = value.length >= 6;
+        newPassword = conditionOne && conditionTwo && conditionThree;
+        break;
       case "confirmPassword":
         confirmPassword = this.state.newPassword === value;
         break;
@@ -73,9 +73,9 @@ class ChangePassword extends Component {
     this.setState(
       {
         validCurrentPassword: currentPassword,
-        // validConditionOne: conditionOne,
-        // validConditionTwo: conditionTwo,
-        // validConditionThree: conditionThree,
+        validConditionOne: conditionOne,
+        validConditionTwo: conditionTwo,
+        validConditionThree: conditionThree,
         validNewPassword: newPassword,
         validConfirmPassword: confirmPassword,
       },
@@ -85,13 +85,13 @@ class ChangePassword extends Component {
 
   validateForm() {
     this.setState({
-      // validChangePassword:
-      //   this.state.validCurrentPassword &&
-      //   this.state.validNewPassword &&
-      //   this.state.validConfirmPassword,
-        // this.state.validConditionOne &&
-        // this.state.validConditionTwo &&
-        // this.state.validConditionThree,
+      validChangePassword:
+        this.state.validCurrentPassword &&
+        this.state.validNewPassword &&
+        this.state.validConfirmPassword &&
+        this.state.validConditionOne &&
+        this.state.validConditionTwo &&
+        this.state.validConditionThree,
     });
   }
 
@@ -101,14 +101,32 @@ class ChangePassword extends Component {
       newPassword: this.state.newPassword,
       confirmPassword: this.state.confirmPassword,
     };
-    api.post("/api/changePassword", data).then((res) => {
-      swal.fire({
-        icon: "success",
-        title: "Password Updated!",
-        html: "Your password has been changed successfully!",
-        showConfirmButton: false,
-        timer: 5500,
+    api
+      .post("/api/changePassword", data)
+      .then(() => {
+        swal.fire({
+          icon: "success",
+          title: "Password Updated!",
+          html: "Your password has been changed successfully!<br>You will be redirected to login page soon.",
+          showConfirmButton: false,
+          timer: 5500,
+        });
+        this.logOut();
+      })
+      .catch((error) => {
+        swal.fire({
+          title: "Error",
+          text: error.response.data.message,
+          icon: "error",
+          confirmButtonColor: "#5bc0de",
+        });
       });
+  }
+
+  logOut() {
+    api.post("/api/logout").then((res) => {
+      localStorage.clear();
+      window.location.reload();
     });
   }
 
@@ -117,16 +135,16 @@ class ChangePassword extends Component {
       currentPassword,
       newPassword,
       confirmPassword,
-      // validConditionOne,
-      // validConditionTwo,
-      // validConditionThree,
-      // validChangePassword,
+      validConditionOne,
+      validConditionTwo,
+      validConditionThree,
+      validChangePassword,
     } = this.state;
 
-    // const validPassword = {
-    //   color: "green",
-    //   textDecoration: "line-through",
-    // };
+    const validPassword = {
+      color: "green",
+      textDecoration: "line-through",
+    };
     return (
       <div>
         <CRow>
@@ -134,13 +152,12 @@ class ChangePassword extends Component {
             <CCard>
               <div className="changePassword">
                 <CCardBody>
-                  <CRow className="justify-content-md">
+                  <CRow className="justify-content-md-center">
                     <CCol md={7}>
                       <h2>Change Your Password</h2>
                     </CCol>
                   </CRow>
-                  <br/>
-                  <CRow className="justify-content changePasswordForm">
+                  <CRow className="justify-content-md-center changePasswordForm">
                     <CCol md={4}>
                       <CFormGroup>
                         <CLabel htmlFor="currentPassword">
@@ -148,10 +165,10 @@ class ChangePassword extends Component {
                         </CLabel>
                         <CInput
                           id="currentPassword"
-                          type="password"
                           name="currentPassword"
-                          onChange={this.handleChange}
                           value={currentPassword}
+                          type="password"
+                          onChange={this.handleChange}
                         />
                       </CFormGroup>
                       <CFormGroup>
@@ -177,16 +194,16 @@ class ChangePassword extends Component {
                         />
                       </CFormGroup>
                       <CButton
-                        // className="changePasswordButton"
+                        className="changePasswordButton"
                         block
                         color="success"
-                        // disabled={validChangePassword === true}
-                        // onClick={this.ChangePassword.bind(this)}
+                        disabled={validChangePassword === false}
+                        onClick={this.ChangePassword.bind(this)}
                       >
-                        Save
+                        Change My Password
                       </CButton>
                     </CCol>
-                    {/* <CCol md={3} className="condition-changePassword">
+                    <CCol md={3} className="condition-changePassword">
                       <h4>Password Must Contain:</h4>
                       <p style={validConditionOne ? validPassword : {}}>
                         At least 1 upper case letter (A-Z)
@@ -197,7 +214,7 @@ class ChangePassword extends Component {
                       <p style={validConditionThree ? validPassword : {}}>
                         At least 6 characters
                       </p>
-                    </CCol> */}
+                    </CCol>
                   </CRow>
                 </CCardBody>
               </div>
