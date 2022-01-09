@@ -43,44 +43,44 @@ class ModalAddress extends Component {
             <CRow>
               <CCol xs="12">
                 <CFormGroup>
-                  <CLabel htmlFor="address">Address</CLabel>
+                  <CLabel htmlFor="edit_address">Address</CLabel>
                   <CInput
-                    id="address"
-                    name="address"
-                    value={this.props.address}
+                    id="edit_address"
+                    name="edit_address"
+                    value={this.props.address|| ""}
                     onChange={this.props.handleChange}
                   />
                 </CFormGroup>
               </CCol>
               <CCol xs="12">
                 <CFormGroup>
-                  <CLabel htmlFor="zipcode">Zipcode</CLabel>
+                  <CLabel htmlFor="edit_zipcode">Zipcode</CLabel>
                   <CInput
-                    id="zipcode"
-                    name="zipcode"
-                    value={this.props.zipcode}
+                    id="edit_zipcode"
+                    name="edit_zipcode"
+                    value={this.props.zipcode|| ""}
                     onChange={this.props.handleChange}
                   />
                 </CFormGroup>
               </CCol>
               <CCol xs="12">
                 <CFormGroup>
-                  <CLabel htmlFor="city">City</CLabel>
+                  <CLabel htmlFor="edit_city">City</CLabel>
                   <CInput
-                    id="city"
-                    name="city"
-                    value={this.props.city}
+                    id="edit_city"
+                    name="edit_city"
+                    value={this.props.city|| ""}
                     onChange={this.props.handleChange}
                   />
                 </CFormGroup>
               </CCol>
               <CCol xs="12">
                 <CFormGroup>
-                  <CLabel htmlFor="state">State</CLabel>
+                  <CLabel htmlFor="edit_state">State</CLabel>
                   <CInput
-                    id="state"
-                    name="state"
-                    value={this.props.state}
+                    id="edit_state"
+                    name="edit_state"
+                    value={this.props.state|| ""}
                     onChange={this.props.handleChange}
                   />
                 </CFormGroup>

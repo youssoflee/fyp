@@ -20,7 +20,8 @@ class Address extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.match.params.id,
+      user_id: "",
+      customer_id: "",
       name: "",
       email: "",
       phone_num: "",
@@ -28,6 +29,12 @@ class Address extends Component {
       zipcode: "",
       city: "",
       state: "",
+
+      edit_address: "",
+      edit_zipcode: "",
+      edit_city: "",
+      edit_state: "",
+
       addresses: [],
       isLoading: false,
       isModal: false,
@@ -64,7 +71,7 @@ class Address extends Component {
   }
 
   getInformation() {
-    api.get("/api/getCurrentAddress").then((res) => {
+    api.get("/api/getCurrentUser").then((res) => {
       this.setState({
         user_id: res.data.id,
         customer_id: res.data.customer.id,
@@ -110,16 +117,16 @@ class Address extends Component {
     });
     const data = {
       user_id: this.state.user_id,
-      // name: this.state.name,
-      // email: this.state.email,
+      name: this.state.name,
+      email: this.state.email,
       // password: this.state.password,
-      // phone_num: this.state.phone_num,
-      address: this.state.address,
-      zipcode: this.state.zipcode,
-      city: this.state.city,
-      state: this.state.state,
+      phone_num: this.state.phone_num,
+      address: this.state.edit_address,
+      zipcode: this.state.edit_zipcode,
+      city: this.state.edit_city,
+      state: this.state.edit_state,
     };
-    // console.log(this.state.customer_id, data);
+    console.log(this.state.customer_id, data);
     api
       .put("/api/updateCustomer/" + this.state.customer_id, data)
       .then((res) => {
@@ -133,6 +140,8 @@ class Address extends Component {
               button: "OK!",
             })
             .then(() => {
+              this.setModal();
+              window.location.reload();
               // this.loadCustomers();
               // this.setState({
               //   isLoading: !this.state.isLoading,
@@ -155,16 +164,10 @@ class Address extends Component {
 
   setEditAddressForm() {
     this.setState({
-      // isAddCustomer: true,
-      user_id: "",
-      // name: "",
-      // email: "",
-      // password: "" ,
-      // phone_num: "",
-      address: "",
-      zipcode: "",
-      city: "",
-      state: "",
+      edit_address: this.state.address,
+      edit_zipcode: this.state.zipcode,
+      edit_city: this.state.city,
+      edit_state: this.state.state,
     });
     this.setModal();
   }
@@ -255,11 +258,11 @@ class Address extends Component {
                     </CCol>
                     <strong>:</strong> */}
                     <CCol sm={5}>
-                      {address ? address : "address"}
+                      {address ? address : ""}
                       <br />
-                      {city ? city : "city"} {zipcode ? zipcode : "zipcode"}
+                      {city ? city : ""} {zipcode ? zipcode : ""}
                       <br />
-                      {state ? state : "state"}
+                      {state ? state : ""}
                     </CCol>
                   </CRow>
                   <CRow className="py-1">
@@ -282,10 +285,10 @@ class Address extends Component {
           </CCol>
         </CRow>
         <ModalAddress
-          address={this.state.address}
-          zipcode={this.state.zipcode}
-          city={this.state.city}
-          state={this.state.state}
+          address={this.state.edit_address}
+          zipcode={this.state.edit_zipcode}
+          city={this.state.edit_city}
+          state={this.state.edit_state}
           isModal={this.state.isModal}
           setModal={this.setModal}
           handleChange={this.handleChange}
