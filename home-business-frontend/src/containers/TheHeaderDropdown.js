@@ -19,6 +19,7 @@ class TheHeaderDropdown extends Component {
   }
   render() {
     return (
+      
       <CDropdown inNav className="c-header-nav-items mx-2" direction="down">
         <CDropdownToggle className="c-header-nav-link">
           <CIcon name="cil-user" className="mfe-2" />
