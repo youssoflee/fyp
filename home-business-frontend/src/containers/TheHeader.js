@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   CHeader,
@@ -18,7 +18,7 @@ import routes from "../routes";
 
 import {
   TheHeaderDropdown,
-  TheHeaderDropdownMssg,
+  TheHeaderDropdownCart,
   // TheHeaderDropdownNotif,
   // TheHeaderDropdownTasks,
 } from "./index";
@@ -26,6 +26,19 @@ import {
 const TheHeader = () => {
   const dispatch = useDispatch();
   const sidebarShow = useSelector((state) => state.sidebarShow);
+
+  const [storedValue] = useState(() => {
+    try {
+      // Get from local storage by key
+      const item = window.localStorage.getItem("user");
+      // Parse stored json or if none return initialValue
+      return item ? JSON.parse(item).role : "null";
+    } catch (error) {
+      // If error also return initialValue
+      console.log(error);
+      return "null";
+    }
+  });
 
   // const toggleSidebar = () => {
   //   const val = [true, "responsive"].includes(sidebarShow)
@@ -76,7 +89,7 @@ const TheHeader = () => {
       <CHeaderNav className="px-3">
         {/* <TheHeaderDropdownNotif/> */}
         {/* <TheHeaderDropdownTasks/> */}
-        <TheHeaderDropdownMssg/>
+        {storedValue === "Customer" ? <TheHeaderDropdownCart /> : ""}
         <TheHeaderDropdown />
       </CHeaderNav>
 
