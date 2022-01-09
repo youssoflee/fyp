@@ -30,7 +30,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/registerCustomer', [UserController::class, 'registerCustomer']);
 Route::get('/getUsers', [UserController::class, 'index']);
 
-Route::post('/changePassword', [AuthController::class, 'changePassword']);
+
 
 Route::get('/getAllCustomer', [CustomerController::class, 'index']);
 Route::post('/addCustomer', [CustomerController::class, 'store']);
@@ -86,4 +86,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/changePassword', [AuthController::class, 'changePassword']);
+    
+    Route::get('/getCurrentUser', [UserController::class, 'getCurrentUser']);
 });
