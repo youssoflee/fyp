@@ -35,9 +35,7 @@ class ModalAddress extends Component {
         >
           <CModalHeader closeButton>
             <CModalTitle>
-              {this.props.isAddAddress
-                ? "Add New Address"
-                : "Update Address"}
+              Update Address Details
             </CModalTitle>
           </CModalHeader>
           <CModalBody>
@@ -95,13 +93,9 @@ class ModalAddress extends Component {
             </CButton>
             <CButton
               color="success"
-              onClick={
-                this.props.isAddCustomer
-                  ? this.props.confirmAdd
-                  : this.props.updateData
-              }
+              onClick={this.props.updateAddress}
             >
-              {this.props.isAddCustomer ? "Add" : "Save"}
+              Update
             </CButton>
           </CModalFooter>
         </CModal>

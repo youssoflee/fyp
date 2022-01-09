@@ -8,9 +8,10 @@ import {
   CImg
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import { freeSet } from "@coreui/icons";
 
 const TheHeaderDropdownMssg = () => {
-  const itemsCount = 4
+  const itemsCount = 2
   return (
     <CDropdown
       inNav
@@ -18,7 +19,8 @@ const TheHeaderDropdownMssg = () => {
       direction="down"
     >
       <CDropdownToggle className="c-header-nav-link" caret={false}>
-        <CIcon name="cil-envelope-open" /><CBadge shape="pill" color="info">{itemsCount}</CBadge>
+      <CIcon content={freeSet.cilCart} />
+        <CBadge shape="pill" color="info">{itemsCount}</CBadge>
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownItem
@@ -26,7 +28,7 @@ const TheHeaderDropdownMssg = () => {
           tag="div"
           color="light"
         >
-          <strong>You have {itemsCount} messages</strong>
+          {/* <strong>You have {itemsCount} messages</strong> */}
         </CDropdownItem>
         <CDropdownItem href="#">
           <div className="message">

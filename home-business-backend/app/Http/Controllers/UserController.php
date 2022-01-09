@@ -120,4 +120,15 @@ class UserController extends Controller
             return $currentUser;
         }
     }
+
+    public function getCurrentAddress()
+    {
+        $currentUser = Auth::user();
+
+        if ($currentUser->role_id == $currentUser->role_id) {
+            return User::with('Customer')->find($currentUser->id);
+        } else {
+            return $currentUser;
+        }
+    }
 }

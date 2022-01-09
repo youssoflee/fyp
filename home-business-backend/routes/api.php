@@ -89,4 +89,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/changePassword', [AuthController::class, 'changePassword']);
     
     Route::get('/getCurrentUser', [UserController::class, 'getCurrentUser']);
+    Route::get('/getCurrentAddress', [UserController::class, 'getCurrentAddress']);
 });

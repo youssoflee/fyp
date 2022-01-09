@@ -10,8 +10,8 @@ import {
 } from "@coreui/react";
 import React, { Component } from "react";
 //   import { Link } from "react-router-dom";
-import CIcon from "@coreui/icons-react";
-import { freeSet } from "@coreui/icons";
+// import CIcon from "@coreui/icons-react";
+// import { freeSet } from "@coreui/icons";
 import api from "src/services/api";
 //   import swal from "sweetalert2";
 import Loader from "src/containers/Loader";
@@ -132,14 +132,14 @@ class Product extends Component {
               <CCol sm={8}>
                 <h3>List of Products</h3>{" "}
               </CCol>
-              <CCol className="d-grid gap-2 d-md-flex justify-content-md-end">
+              {/* <CCol className="d-grid gap-2 d-md-flex justify-content-md-end">
                 <CButton
                   // variant="outline"
                   color="primary"
                 >
                   <CIcon content={freeSet.cilCart} />
                 </CButton>
-              </CCol>
+              </CCol> */}
             </CRow>
           </CCardHeader>
           <CCardBody>

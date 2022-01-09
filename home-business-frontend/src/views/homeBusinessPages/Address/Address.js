@@ -12,9 +12,9 @@ import React, { Component } from "react";
 import CIcon from "@coreui/icons-react";
 // import { freeSet } from "@coreui/icons";
 import api from "src/services/api";
-// import swal from "sweetalert2";
+import ModalAddress from "./ModalAddress";
+import swal from "sweetalert2";
 // import Loader from "src/containers/Loader";
-// import ModalAddress from "./ModalAddress";
 
 class Address extends Component {
   constructor(props) {
@@ -42,9 +42,9 @@ class Address extends Component {
       //   price: "",
     };
 
-    // this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     // this.disableOnRowClick = this.disableOnRowClick.bind(this);
-    // this.setModal = this.setModal.bind(this);
+    this.setModal = this.setModal.bind(this);
   }
 
   componentDidMount() {
@@ -52,8 +52,19 @@ class Address extends Component {
     // this.getAddressDetails();
   }
 
+  handleChange(e) {
+    // console.log(e.target.name, e.target.value);
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  setModal(action) {
+    this.setState((prevState) => ({ isModal: !prevState.isModal }));
+  }
+
   getInformation() {
-    api.get("/api/getCurrentUser").then((res) => {
+    api.get("/api/getCurrentAddress").then((res) => {
       this.setState({
         user_id: res.data.id,
         customer_id: res.data.customer.id,
@@ -87,6 +98,75 @@ class Address extends Component {
         //   })
       );
     });
+  }
+
+  updateAddress() {
+    swal.fire({
+      title: "Updating",
+      showConfirmButton: false,
+      didOpen: () => {
+        swal.showLoading();
+      },
+    });
+    const data = {
+      user_id: this.state.user_id,
+      // name: this.state.name,
+      // email: this.state.email,
+      // password: this.state.password,
+      // phone_num: this.state.phone_num,
+      address: this.state.address,
+      zipcode: this.state.zipcode,
+      city: this.state.city,
+      state: this.state.state,
+    };
+    // console.log(this.state.customer_id, data);
+    api
+      .put("/api/updateCustomer/" + this.state.customer_id, data)
+      .then((res) => {
+        swal.close();
+        if (res.data.status === 200) {
+          swal
+            .fire({
+              title: "Updated!",
+              text: "Address Details updated successfully",
+              icon: "success",
+              button: "OK!",
+            })
+            .then(() => {
+              // this.loadCustomers();
+              // this.setState({
+              //   isLoading: !this.state.isLoading,
+              // });
+            });
+        } else {
+          // this.setState({ error_list: res.data.validate_err });
+        }
+      })
+      .catch((error) => {
+        // console.log(error);
+        swal.fire({
+          title: "Error",
+          text: error,
+          icon: "error",
+          button: "OK!",
+        });
+      });
+  }
+
+  setEditAddressForm() {
+    this.setState({
+      // isAddCustomer: true,
+      user_id: "",
+      // name: "",
+      // email: "",
+      // password: "" ,
+      // phone_num: "",
+      address: "",
+      zipcode: "",
+      city: "",
+      state: "",
+    });
+    this.setModal();
   }
 
   render() {
@@ -144,7 +224,7 @@ class Address extends Component {
                     <CButton
                       color="dark"
                       variant="outline"
-                      // onClick={this.modalEditUserForm.bind(this)}
+                      onClick={this.setEditAddressForm.bind(this)}
                     >
                       <CIcon name="cil-pencil" />
                     </CButton>
@@ -199,89 +279,19 @@ class Address extends Component {
                 </div>
               </CCardBody>
             </CCard>
-            <CCard>
-              {/* <CCardHeader>
-                <CRow>
-                  <CCol sm={8}>
-                    <h4>Emails</h4>
-                  </CCol>
-                  <CCol className="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <CButton
-                      variant="outline"
-                      color="dark"
-                      onClick={this.modalAddEmailForm.bind(this)}
-                    >
-                      <CIcon content={freeSet.cilPlus} />
-                      Email
-                    </CButton>
-                  </CCol>
-                </CRow>
-              </CCardHeader> */}
-              {/* <CCardBody>
-                <CDataTable
-                  fields={fields}
-                  itemsPerPage={10}
-                  items={listOfAddress}
-                  pagination
-                  // scopedSlots={{
-                  //   Password: (item) => (
-                  //     <td>{item.Password == null ? "-" : item.Password}</td>
-                  //   ),
-                  //   Action: (item) => (
-                  //     <td>
-                  //       <CButton
-                  //         color="dark"
-                  //         variant="outline"
-                  //         onClick={this.modalEditEmailForm.bind(
-                  //           this,
-                  //           item.emailID,
-                  //           item.Email,
-                  //           item.Password
-                  //         )}
-                  //       >
-                  //         <CIcon name="cil-pencil" />
-                  //       </CButton>
-                  //       &nbsp;
-                  //       <CButton
-                  //         color="danger"
-                  //         variant="outline"
-                  //         onClick={this.deleteEmail.bind(
-                  //           this,
-                  //           item.emailID,
-                  //           item.Email
-                  //         )}
-                  //       >
-                  //         <CIcon name="cil-trash" />
-                  //       </CButton>
-                  //     </td>
-                  //   ),
-                  // }}
-                />
-              </CCardBody> */}
-            </CCard>
           </CCol>
         </CRow>
-        {/* <ModalEditUserBasicData
-          modalEditUser={this.state.modalEditUser}
-          modalEditUserForm={this.modalEditUserForm.bind(this)}
+        <ModalAddress
+          address={this.state.address}
+          zipcode={this.state.zipcode}
+          city={this.state.city}
+          state={this.state.state}
+          isModal={this.state.isModal}
+          setModal={this.setModal}
           handleChange={this.handleChange}
-          name={inputName}
-          email={inputEmail}
-          staffId={inputStaffId}
-          updateUser={this.updateUser.bind(this)}
+          updateAddress={this.updateAddress.bind(this)}
+          // getInformation={this.getInformation.bind(this)}
         />
-        <ModalNewEmail
-          modalAddEmail={this.state.modalAddEmail}
-          modalAddEmailForm={this.modalAddEmailForm.bind(this)}
-          modalEditEmail={this.state.modalEditEmail}
-          modalEditEmailForm={this.modalEditEmailForm.bind(this)}
-          editEmail={this.editEmail.bind(this)}
-          isEdit={this.state.isEdit}
-          handleChange={this.handleChange}
-          addEmail={this.addEmail.bind(this)}
-          inputAddEmail={inputAddEmail}
-          inputAddPassword={inputAddPassword}
-        /> */}
       </div>
     );
   }
