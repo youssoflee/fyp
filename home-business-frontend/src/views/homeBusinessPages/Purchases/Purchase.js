@@ -16,7 +16,7 @@ import {
   import Loader from "src/containers/Loader";
   //   import ModalAddCustomer from "./ModalCustomer";
   
-  class Statictic extends Component {
+  class Purchase extends Component {
     constructor() {
       super();
       this.state = {
@@ -103,7 +103,7 @@ import {
                 pagination
                 hover
                 clickableRows
-                onRowClick={(item) => this.detailPage(item.Id)}
+                // onRowClick={(item) => this.detailPage(item.Id)}
                 // scopedSlots={{
                 //   action: (item) => (
                 //     <td onClick={this.disableOnRowClick}>
@@ -142,5 +142,5 @@ import {
     }
   }
   
-  export default Statictic;
+  export default Purchase;
   

@@ -128,7 +128,7 @@ class Address extends Component {
     };
     console.log(this.state.customer_id, data);
     api
-      .put("/api/updateCustomer/" + this.state.customer_id, data)
+      .put("/api/updateAddress/" + this.state.customer_id, data)
       .then((res) => {
         swal.close();
         if (res.data.status === 200) {

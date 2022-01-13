@@ -16,7 +16,7 @@ import api from "src/services/api";
 //   import swal from "sweetalert2";
 import Loader from "src/containers/Loader";
 
-class Product extends Component {
+class Shop extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -183,4 +183,4 @@ class Product extends Component {
   }
 }
 
-export default Product;
+export default Shop;

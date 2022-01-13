@@ -38,6 +38,8 @@ Route::get('/showCustomer/{id}', [CustomerController::class, 'show']);
 Route::get('/editCustomer/{id}', [CustomerController::class, 'edit']);
 Route::get('/AddressDetails/{id}', [CustomerController::class, 'details']);
 Route::put('/updateCustomer/{id}', [CustomerController::class, 'update']);
+Route::put('/updateInformation/{id}', [CustomerController::class, 'updateInformation']);
+Route::put('/updateAddress/{id}', [CustomerController::class, 'updateAddress']);
 Route::delete('/delCustomer/{id}', [CustomerController::class, 'destroy']);
 
 Route::get('/getAllAdmin', [AdminController::class, 'index']);

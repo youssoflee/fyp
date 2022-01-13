@@ -150,7 +150,95 @@ class CustomerController extends Controller
             } else {
                 return response()->json([
                     'status' => 404,
-                    'customer' => 'No customer ID FOUND',
+                    'customer' => 'Customer ID NOT FOUND',
+                ]);
+                // $customer->update($request->all());
+                // return $customer;
+            }
+        }
+    }
+
+    public function updateAddress(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'address' => 'required|max:191',
+            'zipcode' => 'required|max:191|min:5',
+            'city' => 'required|max:191',
+            'state' => 'required|max:191',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'validate_err' => $validator->messages(),
+            ]);
+        } else {
+            $user = User::find($request->user_id);
+            $customer = Customer::find($id);
+            if ($customer) {
+                $customer->address = $request->input('address');
+                $customer->zipcode = $request->input('zipcode');
+                $customer->city = $request->input('city');
+                $customer->state = $request->input('state');
+                $customer->save();
+                // echo $name;
+                // echo $phone_num;
+                // echo $address;
+                // echo $zipcode;
+                // echo $city;
+                // echo $state;
+                // echo $request;
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Address Details Updated Successfully',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 404,
+                    'customer' => 'Customer ID NOT FOUND',
+                ]);
+                // $customer->update($request->all());
+                // return $customer;
+            }
+        }
+    }
+
+    public function updateInformation(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:191',
+            'email' => 'required|email|max:191',
+            // 'password' => 'required|max:191',
+            'phone_num' => 'required|max:191|min:10',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'validate_err' => $validator->messages(),
+            ]);
+        } else {
+            $user = User::find($request->user_id);
+            $customer = Customer::find($id);
+            if ($customer) {
+                $user->name = $request->input('name');
+                $user->email = $request->input('email');
+                $user->save();
+                $customer->phone_num = $request->input('phone_num');
+                $customer->save();
+                // echo $name;
+                // echo $phone_num;
+                // echo $address;
+                // echo $zipcode;
+                // echo $city;
+                // echo $state;
+                // echo $request;
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Customer Updated Successfully',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 404,
+                    'customer' => 'Customer ID NOT FOUND',
                 ]);
                 // $customer->update($request->all());
                 // return $customer;

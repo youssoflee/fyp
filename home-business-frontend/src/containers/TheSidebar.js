@@ -10,6 +10,7 @@ import {
   // CSidebarMinimizer,
   CSidebarNavDropdown,
   CSidebarNavItem,
+  CSidebarMinimizer,
 } from '@coreui/react'
 
 // import CIcon from '@coreui/icons-react'
@@ -51,7 +52,8 @@ const TheSidebar = () => {
             CSidebarNavDivider,
             CSidebarNavDropdown,
             CSidebarNavItem,
-            CSidebarNavTitle
+            CSidebarNavTitle,
+            CSidebarMinimizer
           }}
         />
       </CSidebarNav>

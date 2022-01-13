@@ -24,7 +24,7 @@ const _nav = [
     // component: CNavItem,
     name: "Customers",
     to: "/seller/customer",
-    icon: "cil-user",
+    // icon: "cil-user",
     permission: [Roles.SELLER],
   },
   {
@@ -32,7 +32,7 @@ const _nav = [
     // component: CNavItem,
     name: "Products",
     to: "/seller/product",
-    icon: "cil-pencil",
+    // icon: "cil-pencil",
     permission: [Roles.SELLER],
   },
   {
@@ -40,7 +40,7 @@ const _nav = [
     // component: CNavItem,
     name: "Orders",
     to: "/seller/order",
-    icon: "cil-tags",
+    // icon: "cil-tags",
     permission: [Roles.SELLER],
   }, 
   {
@@ -48,7 +48,7 @@ const _nav = [
     // component: CNavItem,
     name: "Statistics",
     to: "/seller/statistic",
-    icon: "cil-chart-pie",
+    // icon: "cil-chart-pie",
     permission: [Roles.SELLER],
   },
   // {
@@ -61,7 +61,7 @@ const _nav = [
     // component: CNavItem,
     name: "Shop",
     to: "/customer/shop",
-    icon: "cil-chart-pie",
+    // icon: "cil-check",
     permission: [Roles.CUSTOMER],
   },
   {
@@ -69,7 +69,7 @@ const _nav = [
     // component: CNavItem,
     name: "Purchase History",
     to: "/customer/purchase",
-    icon: "cil-chart-pie",
+    // icon: "cil-chart-pie",
     permission: [Roles.CUSTOMER],
   },
   {
@@ -77,7 +77,7 @@ const _nav = [
     // component: CNavItem,
     name: "My Address",
     to: "/customer/address",
-    icon: "cil-chart-pie",
+    // icon: "cil-chart-pie",
     permission: [Roles.CUSTOMER],
   },
 

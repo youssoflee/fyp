@@ -18,6 +18,7 @@ class PersonalInformation extends Component {
     super(props);
     this.state = {
       user_id: "",
+      // role_id: "",
       customer_id: "",
       name: "",
       email: "",
@@ -34,6 +35,23 @@ class PersonalInformation extends Component {
 
   getInformation() {
     api.get("/api/getCurrentUser").then((res) => {
+      // if (user_id == 1) {
+      //   this.setState({
+      //     user_id: res.data.id,
+      //     name: res.data.name,
+      //     email: res.data.email,
+      //     phone_num: res.data.customer.phone_num,
+      //   });
+      // }
+      // else{
+      //   this.setState({
+      //     user_id: res.data.id,
+      //     name: res.data.name,
+      //     customer_id: res.data.customer.id,
+      //     email: res.data.email,
+      //     phone_num: res.data.customer.phone_num,
+      //   });
+      // }
       this.setState({
         user_id: res.data.id,
         customer_id: res.data.customer.id,
@@ -63,9 +81,9 @@ class PersonalInformation extends Component {
       // city: this.state.city,
       // state: this.state.state,
     };
-    // console.log(this.state.customer_id, data);
+    console.log(this.state.customer_id, data);
     api
-      .put("/api/updateCustomer/" + this.state.customer_id, data)
+      .put("/api/updateInformation/" + this.state.customer_id, data)
       .then((res) => {
         swal.close();
         if (res.data.status === 200) {
@@ -77,6 +95,7 @@ class PersonalInformation extends Component {
               button: "OK!",
             })
             .then(() => {
+              window.location.reload();
               // this.loadCustomers();
               // this.setState({
               //   isLoading: !this.state.isLoading,

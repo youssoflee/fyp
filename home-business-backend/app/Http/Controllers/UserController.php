@@ -116,7 +116,11 @@ class UserController extends Controller
 
         if ($currentUser->role_id == 2) {
             return User::with('Customer')->find($currentUser->id);
-        } else {
+        }
+        // else if ($currentUser->user_id == 1) {
+        //     return User::with('Seller')->find($currentUser->id);
+        // } 
+        else {
             return $currentUser;
         }
     }

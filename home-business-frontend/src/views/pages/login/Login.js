@@ -121,17 +121,17 @@ class Login extends Component {
                       </CInputGroup>
                       <CRow>
                         <CCol xs="6">
-                          <CButton
+                          {/* <CButton color="link" className="px-0">
+                            Forgot password?
+                          </CButton> */}
+                        </CCol>
+                        <CCol xs="6" className="text-right">
+                        <CButton
                             color="primary"
                             className="px-4"
                             onClick={this.handleLogin.bind(this)}
                           >
                             Login
-                          </CButton>
-                        </CCol>
-                        <CCol xs="6" className="text-right">
-                          <CButton color="link" className="px-0">
-                            Forgot password?
                           </CButton>
                         </CCol>
                       </CRow>

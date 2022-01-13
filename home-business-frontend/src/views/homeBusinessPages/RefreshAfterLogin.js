@@ -17,7 +17,11 @@ class Dashboard extends Component {
     }
   }
   render() {
-    return <div>DO NOT CHANGeeE</div>;
+    return (
+      <div  className="text-center">
+        <h1>Welcome to Home-Business System</h1>
+      </div>
+    );
   }
 }
 

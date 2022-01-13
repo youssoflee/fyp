@@ -11,6 +11,8 @@ import {
 } from "@coreui/react";
 import api from "../../../services/api";
 import swal from "sweetalert2";
+// import CIcon from "@coreui/icons-react";
+// import { cilFastfood } from "@coreui/icons";
 
 class ChangePassword extends Component {
   constructor() {
