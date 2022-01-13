@@ -47,7 +47,7 @@ import {
         "total",
         // "quantity",
         // "price",
-        "Cancel ",
+        // "Cancel ",
       ];
       const listOfPurchases = [];
       let number = 0;
