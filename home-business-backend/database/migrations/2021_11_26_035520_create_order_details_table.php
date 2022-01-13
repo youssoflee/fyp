@@ -17,8 +17,8 @@ class CreateOrderDetailsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_id');
-            $table->string('order_quantity');
-            $table->string('amount');
+            $table->integer('purchase_quantity');
+            $table->double('amount');
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders');

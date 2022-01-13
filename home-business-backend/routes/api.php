@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
@@ -77,8 +78,7 @@ Route::put('/updateAdmin/{id}', [AdminController::class, 'update']);
 Route::delete('/destroyAdmin/{id}', [AdminController::class, 'destroy']);
 
 Route::get('/getAllOrder', [OrderController::class, 'index']);
-Route::post('/addOrder', [OrderController::class, 'store']);
-Route::get('/showOrder/{id}', [OrderController::class, 'show']);
+
 Route::put('/updateOrder/{id}', [OrderController::class, 'update']);
 Route::delete('/destroyOrder/{id}', [OrderController::class, 'destroy']);
 
@@ -89,7 +89,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/changePassword', [AuthController::class, 'changePassword']);
-    
+
     Route::get('/getCurrentUser', [UserController::class, 'getCurrentUser']);
     Route::get('/getCurrentAddress', [UserController::class, 'getCurrentAddress']);
+
+    Route::get('/getCart', [OrderController::class, 'getCart']);
+    Route::post('/addToCart', [OrderController::class, 'addToCart']);
+    // Route::post('/updateCart', [OrderController::class, 'updateCart']);
+    Route::put('/checkoutCart/{id}', [OrderController::class, 'checkoutCart']);
 });

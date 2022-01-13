@@ -18,12 +18,13 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('type');
             $table->string('desc');
+            $table->integer('min_quantity');
+            $table->integer('quantity');
+            $table->double('price');
             $table->unsignedBigInteger('status_id');
-            $table->foreign('status_id')->references('id')->on('product_statuses');
-            $table->string('min_quantity');
-            $table->string('quantity');
-            $table->string('price');
             $table->timestamps();
+
+            $table->foreign('status_id')->references('id')->on('product_statuses');
         });
     }
 

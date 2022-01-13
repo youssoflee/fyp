@@ -17,10 +17,10 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('customer_id');
-            $table->string('quantity');
-            $table->string('price');
+            $table->double('amount_paid');
             $table->timestamps();
 
+            $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('customer_id')->references('id')->on('customers');
         });
     }

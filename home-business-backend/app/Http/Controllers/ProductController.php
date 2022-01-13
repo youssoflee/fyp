@@ -17,9 +17,20 @@ class ProductController extends Controller
     {
         // return Product::all();
         $product = Product::with('ProductStatus')->get();
+        $res = array();
+        foreach ($product as $p) {
+            $array = [
+                'id' => $p->id,
+                'name' => $p->name,
+                'price' => $p->price,
+                'purchase_quantity' => 0,
+                'status' => $p->ProductStatus,
+            ];
+            array_push($res, $array);
+        }
         return response()->json([
             'status' => 200,
-            'products' => $product,
+            'products' => $res,
         ]);
     }
 

@@ -50,6 +50,7 @@ const Purchase = React.lazy(() => import('./views/homeBusinessPages/Purchases/Pu
 const Address = React.lazy(() => import('./views/homeBusinessPages/Address/Address'));
 const ChangePassword = React.lazy(() => import('./views/homeBusinessPages/Passwords/ChangePassword'))
 const PersonalInformation = React.lazy(() => import('./views/homeBusinessPages/Personal/PersonalInformation'));
+const ShoppingCart = React.lazy(() => import('./views/homeBusinessPages/Cart/ShoppingCart'));
 
 // const AddCustomer = React.lazy(() => import('./views/homeBusinessPages/Customers/Addcustomer'))
 // const EditCustomer = React.lazy(() => import('./views/homeBusinessPages/Customers/Editcustomer'))
@@ -70,6 +71,7 @@ const routes = [
    { path: '/customer/address', name: 'My Address', component: Address, permission: [Roles.CUSTOMER] },
    { path: '/change-password', name: 'Change Password', component: ChangePassword },
    { path: '/personal-information', name: 'Personal Information', component: PersonalInformation },
+   { path: '/shopping-cart', name: 'Shopping Cart', component: ShoppingCart },
 
 
   //  { path: '/addcustomer', name: 'Add Customer', component: AddCustomer },
